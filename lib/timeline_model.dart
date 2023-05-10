@@ -6,7 +6,7 @@ class TimelineModel {
   final Icon? icon;
   final Color iconBackground;
   final Widget? child;
-  final TimelineItemPosition position;
+  TimelineItemPosition position;
   bool isFirst;
   bool isLast;
   final Function? onTap;
