@@ -4,8 +4,8 @@ import 'package:timeline_list/timeline_model.dart';
 import 'data.dart';
 
 class TimelinePage extends StatefulWidget {
-  TimelinePage({Key key, this.title}) : super(key: key);
-  final String title;
+  TimelinePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _TimelinePageState createState() => _TimelinePageState();

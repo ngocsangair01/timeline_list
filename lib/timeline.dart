@@ -8,7 +8,7 @@ import 'package:timeline_list/timeline_model.dart';
 typedef IndexedTimelineModelBuilder = TimelineModel Function(
     BuildContext context, int index);
 
-enum TimelinePosition { Left, Center, Right }
+enum TimelinePosition { Left, Center, Right,Both }
 
 class TimelineProperties {
   final Color lineColor;
@@ -96,22 +96,31 @@ class Timeline extends StatelessWidget {
 }
 
 final positionBuilder = {
-  TimelinePosition.Left: (
+  TimelinePosition.Both:(
     TimelineProperties properties,
-    TimelineModel model,
-  ) =>
-      TimelineItemLeft(
-        properties: properties,
-        model: model,
-      ),
-  TimelinePosition.Right: (
-    TimelineProperties properties,
-    TimelineModel model,
-  ) =>
-      TimelineItemRight(
-        properties: properties,
-        model: model,
-      ),
+    TimelineModel models,
+  ) =>TimelineItemBoth(
+    properties: properties,
+    model: models,
+  ),
+
+  // TimelinePosition.Left: (
+  //   TimelineProperties properties,
+  //   TimelineModel model,
+  // ) =>
+  //     TimelineItemLeft(
+  //       properties: properties,
+  //       model: model,
+  //     ),
+
+  // TimelinePosition.Right: (
+  //   TimelineProperties properties,
+  //   TimelineModel model,
+  // ) =>
+  //     TimelineItemRight(
+  //       properties: properties,
+  //       model: model,
+  //     ),
   TimelinePosition.Center: (
     TimelineProperties properties,
     TimelineModel model,

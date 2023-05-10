@@ -9,7 +9,8 @@ abstract class TimelineItem extends StatelessWidget {
   final TimelineModel model;
   final TimelineProperties properties;
 
-  const TimelineItem({Key? key, required this.model, required this.properties}) : super(key: key);
+  const TimelineItem({Key? key, required this.model, required this.properties})
+      : super(key: key);
 
   double get iconSize {
     // if no icon is specified, use smaller dot size
@@ -37,7 +38,8 @@ abstract class TimelineItem extends StatelessWidget {
 
 class TimelineItemCenter extends TimelineItem {
   // https://github.com/dart-lang/sdk/issues/29395
-  const TimelineItemCenter({Key? key, required model, required properties, isFirst, isLast})
+  const TimelineItemCenter(
+      {Key? key, required model, required properties, isFirst, isLast})
       : super(model: model, properties: properties, key: key);
 
   AlignmentGeometry get position {
@@ -75,57 +77,99 @@ class TimelineItemCenter extends TimelineItem {
                             TimelineBoxDecoration.LINE_GAP * 2.0,
                         minHeight:
                             iconSize + TimelineBoxDecoration.LINE_GAP * 2),
-                    child: model.child),
+                    child: model.childLeft),
                 Center(child: icon),
               ],
             )));
   }
 }
 
-class TimelineItemLeft extends TimelineItem {
-  const TimelineItemLeft({Key? key, required model, required properties, isFirst, isLast})
-      : super(model: model, properties: properties, key: key);
+// class TimelineItemLeft extends TimelineItem {
+//   const TimelineItemLeft(
+//       {Key? key, required model, required properties, isFirst, isLast})
+//       : super(model: model, properties: properties, key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    final margin = properties.iconSize + TimelineBoxDecoration.LINE_GAP * 2;
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              decoration: TimelineBoxDecoration(
-                isFirst: model.isFirst,
-                isLast: model.isLast,
-                iconSize: model.icon != null
-                    ? properties.iconSize
-                    : TimelineBoxDecoration.DEFAULT_DOT_SIZE,
-                iconBackground: model.iconBackground,
-                properties: properties,
-                timelinePosition: TimelinePosition.Left,
-              ),
-              width: properties.iconSize + 24,
-              alignment: Alignment.center,
-              child: icon,
-            ),
-            Container(
-                padding: const EdgeInsets.only(
-                    left: TimelineBoxDecoration.LINE_GAP),
-                constraints: BoxConstraints(
-                    minHeight: margin,
-                    maxWidth: constraints.maxWidth - margin * 2.0),
-                child: model.child),
-          ],
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final margin = properties.iconSize + TimelineBoxDecoration.LINE_GAP * 2;
+//     return LayoutBuilder(
+//       builder: (BuildContext context, BoxConstraints constraints) {
+//         return Row(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: <Widget>[
+//             Container(
+//               decoration: TimelineBoxDecoration(
+//                 isFirst: model.isFirst,
+//                 isLast: model.isLast,
+//                 iconSize: model.icon != null
+//                     ? properties.iconSize
+//                     : TimelineBoxDecoration.DEFAULT_DOT_SIZE,
+//                 iconBackground: model.iconBackground,
+//                 properties: properties,
+//                 timelinePosition: TimelinePosition.Left,
+//               ),
+//               width: properties.iconSize + 24,
+//               alignment: Alignment.center,
+//               child: icon,
+//             ),
+//             Container(
+//                 padding:
+//                     const EdgeInsets.only(left: TimelineBoxDecoration.LINE_GAP),
+//                 constraints: BoxConstraints(
+//                     minHeight: margin,
+//                     maxWidth: constraints.maxWidth - margin * 2.0),
+//                 child: model.child),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
 
-class TimelineItemRight extends TimelineItem {
-  const TimelineItemRight({Key? key, required model, required properties, isFirst, isLast})
+// class TimelineItemRight extends TimelineItem {
+//   const TimelineItemRight(
+//       {Key? key, required model, required properties, isFirst, isLast})
+//       : super(model: model, properties: properties, key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final margin = properties.iconSize + TimelineBoxDecoration.LINE_GAP * 2;
+//     return LayoutBuilder(
+//         builder: (BuildContext context, BoxConstraints constraints) {
+//       return Row(
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         mainAxisAlignment: MainAxisAlignment.end,
+//         children: <Widget>[
+//           Container(
+//               padding:
+//                   const EdgeInsets.only(right: TimelineBoxDecoration.LINE_GAP),
+//               constraints: BoxConstraints(
+//                   minHeight: margin,
+//                   maxWidth: constraints.maxWidth - margin * 2.0),
+//               child: model.child),
+//           Container(
+//               decoration: TimelineBoxDecoration(
+//                   isFirst: model.isFirst,
+//                   isLast: model.isLast,
+//                   iconSize: model.icon != null
+//                       ? properties.iconSize
+//                       : TimelineBoxDecoration.DEFAULT_DOT_SIZE,
+//                   iconBackground: model.iconBackground,
+//                   properties: properties,
+//                   timelinePosition: TimelinePosition.Right),
+//               width: properties.iconSize + 24,
+//               alignment: Alignment.center,
+//               child: icon),
+//         ],
+//       );
+//     });
+//   }
+// }
+
+class TimelineItemBoth extends TimelineItem {
+  const TimelineItemBoth(
+      {Key? key, required model, required properties, isFirst, isLast})
       : super(model: model, properties: properties, key: key);
 
   @override
@@ -138,25 +182,41 @@ class TimelineItemRight extends TimelineItem {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Container(
+            decoration: TimelineBoxDecoration(
+              isFirst: model.isFirst,
+              isLast: model.isLast,
+              iconSize: model.icon != null
+                  ? properties.iconSize
+                  : TimelineBoxDecoration.DEFAULT_DOT_SIZE,
+              iconBackground: model.iconBackground,
+              properties: properties,
+              timelinePosition: TimelinePosition.Left,
+            ),
+            width: properties.iconSize + 24,
+            alignment: Alignment.center,
+            child: icon,
+          ),
+          Container(
               padding:
                   const EdgeInsets.only(right: TimelineBoxDecoration.LINE_GAP),
               constraints: BoxConstraints(
                   minHeight: margin,
                   maxWidth: constraints.maxWidth - margin * 2.0),
-              child: model.child),
+              child: model.childLeft),
           Container(
-              decoration: TimelineBoxDecoration(
-                  isFirst: model.isFirst,
-                  isLast: model.isLast,
-                  iconSize: model.icon != null
-                      ? properties.iconSize
-                      : TimelineBoxDecoration.DEFAULT_DOT_SIZE,
-                  iconBackground: model.iconBackground,
-                  properties: properties,
-                  timelinePosition: TimelinePosition.Right),
-              width: properties.iconSize + 24,
-              alignment: Alignment.center,
-              child: icon),
+            decoration: TimelineBoxDecoration(
+                isFirst: model.isFirst,
+                isLast: model.isLast,
+                iconSize: model.icon != null
+                    ? properties.iconSize
+                    : TimelineBoxDecoration.DEFAULT_DOT_SIZE,
+                iconBackground: model.iconBackground,
+                properties: properties,
+                timelinePosition: TimelinePosition.Right),
+            width: properties.iconSize + 24,
+            alignment: Alignment.center,
+            child: icon,
+          ),
         ],
       );
     });
